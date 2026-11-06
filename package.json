@@ -1,0 +1,25 @@
+{
+  "name": "@roflochinsky/beads-tern",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Native Beads board for Tern: Luau host and TypeScript bridge",
+  "type": "module",
+  "author": "Roflochinsky",
+  "license": "MIT",
+  "repository": "https://github.com/Roflochinsky/beads-tern",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

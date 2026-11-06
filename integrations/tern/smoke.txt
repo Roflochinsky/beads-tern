@@ -1,0 +1,76 @@
+# Run only against an EMPTY disposable, initialized Beads project.
+# Uses a normal Tern window with --control, never `tern shot`/`serve`.
+# Checks live task state through the native block, not registration callbacks.
+palette "New Beads block"
+key Enter
+plugins expect "No issues in this view"
+key n
+plugins expect "New issue"
+type "Tern native integration smoke"
+key Ctrl+Enter
+plugins expect "Tern native integration smoke"
+plugins expect "P2"
+key j
+key c
+plugins expect "In progress"
+key 2
+plugins expect "Tern native integration smoke"
+key x
+plugins expect "Closing reason"
+key Ctrl+Enter
+plugins expect "Closed"
+key x
+plugins expect "Ready"
+
+# The public native search and layout controls keep the same issue set.
+key Escape
+click "[data-role='beads-search']"
+type "nothing-matches-this-query"
+plugins expect "No matching issues"
+key Escape
+click "[data-role='beads-table-view']"
+plugins expect "Tern native integration smoke"
+click "[data-role='beads-sort-title']"
+click "[data-role='beads-issue']"
+plugins expect "Edit issue"
+tree "[data-role='beads-drawer']"
+key Escape
+click "[data-role='beads-board-view']"
+plugins expect "Tern native integration smoke"
+click "[data-role='beads-issue']"
+plugins expect "Edit issue"
+tree "[data-role='beads-drawer']"
+key Escape
+
+# With two fixture issues, select one in the drawer and use the actual
+# dependency issue/type controls and Link, then remove that edge. Check the
+# authoritative Blocked/Ready views after each operation.
+# Load comments for each issue, compose Cyrillic and supplementary Unicode in
+# the inline comment editor, and verify caret insertion, deletion and Save
+# against the same issue. Cancel editing without submitting during visual-only
+# checks; never run mutations against a production workspace.
+# In search and each text field, use Shift+arrows across a supplementary
+# character, replace the selection, then Ctrl+A and Backspace. The exact
+# resulting text must match the fixture's bd output after saving.
+# Keep search focused across a five-second polling boundary; input must stay
+# writable. In the board, switch layouts while background reads run: a
+# visible enabled action must not be silently dropped.
+# With a linked pair selected, the dependency highlight control must toggle
+# the selected issue's related card/row and dim unrelated issues; it must not
+# change Beads data. Verify both board and table.
+
+# Correction regression: run these manual assertions in the same disposable
+# native window after the scripted lifecycle above; see docs/tern.md.
+# Edit the title while another actor claims the issue and changes description,
+# priority, notes, acceptance and design. Save must change only the title,
+# preserving the other actor's status, assignee and all untouched fields.
+# Edit a field and restore its original value before saving: it must be omitted.
+# Save an unchanged edit form: no update request should be emitted.
+# Request comments for A, then try table select/activate, a board card,
+# dependency navigation, and j/k before completion. Selection must remain A;
+# only A may show the result. After selecting B, A's comments must disappear.
+# Seed pinned, hooked and custom-status issues in the disposable fixture.
+# All board must show each in Other; j/k must select only rendered cards.
+# A native blocked in_progress issue must appear in Blocked, not Active;
+# an explicit blocked issue must appear even when absent from blockedIds.
+# Ready must match native readyIds, not be inferred from open/custom status.
